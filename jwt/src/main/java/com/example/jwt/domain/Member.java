@@ -1,6 +1,7 @@
 package com.example.jwt.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 
 @Entity
 @Getter
+@AllArgsConstructor
 @NoArgsConstructor
 public class Member {
 
