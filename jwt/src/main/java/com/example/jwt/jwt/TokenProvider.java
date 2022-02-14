@@ -26,7 +26,6 @@ public class TokenProvider implements InitializingBean {
     /*
         InitializingBean 을 상속 받은 이유
         빈이 생성이 되고 주입을 받은 후 secret 값을 디코드, key 변수에 할당
-
      */
 
     private final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
@@ -52,7 +51,7 @@ public class TokenProvider implements InitializingBean {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(Authentication authentication) {
+    public String createToken(String email, Authentication authentication) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(",")); // 권한들 확인
@@ -61,7 +60,7 @@ public class TokenProvider implements InitializingBean {
         Date validity = new Date(now + this.tokenValidityInMilliseconds); // 만료 시간 설정
 
         return Jwts.builder()
-                .setSubject(authentication.getName())
+                .claim("email", email)
                 .claim(AUTHORITIES_KEY, authorities)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .setExpiration(validity)
@@ -82,9 +81,7 @@ public class TokenProvider implements InitializingBean {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        User principal = new User(claims.getSubject(), "", authorities);
-
-        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+        return new UsernamePasswordAuthenticationToken(claims.get("email"), token, authorities);
     }
 
     public boolean validateToken(String token) {

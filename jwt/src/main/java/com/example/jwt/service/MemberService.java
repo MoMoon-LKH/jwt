@@ -3,13 +3,19 @@ package com.example.jwt.service;
 import com.example.jwt.domain.Member;
 import com.example.jwt.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class MemberService {
+public class MemberService{
 
     private final MemberRepository memberRepository;
 
@@ -20,8 +26,9 @@ public class MemberService {
         return member.getId();
     }
 
-    public Member findOne(Long memberId) {
-        return memberRepository.findOne(memberId);
+    public Optional<Member> findOneByEmail(String email) {
+        return memberRepository.findOneByEmail(email);
     }
 
 }
+

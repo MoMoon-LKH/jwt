@@ -3,10 +3,12 @@ package com.example.jwt.repository;
 
 import com.example.jwt.domain.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -18,8 +20,9 @@ public class MemberRepository {
         em.persist(member);
     }
 
-    public Member findOne(Long memberId) {
-        return em.find(Member.class, memberId);
+    @EntityGraph(attributePaths = "authorities")
+    public Optional<Member> findOneByEmail(String email) {
+        return Optional.ofNullable(em.find(Member.class, email));
     }
 
     public List<Member> findMembers(Member member) {

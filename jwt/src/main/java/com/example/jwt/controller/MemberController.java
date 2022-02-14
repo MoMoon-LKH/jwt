@@ -1,7 +1,8 @@
 package com.example.jwt.controller;
 
-import com.example.jwt.domain.Member;
 import com.example.jwt.controller.dto.MemberDto;
+import com.example.jwt.domain.Member;
+import com.example.jwt.controller.dto.LoginDto;
 import com.example.jwt.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/member")
@@ -27,7 +30,7 @@ public class MemberController {
     }
 
     @PostMapping("/new")
-    public String join(@Validated MemberDto memberDto, BindingResult result, Model model) {
+    public String join(@Valid MemberDto memberDto, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
             return "join";
@@ -37,13 +40,12 @@ public class MemberController {
 
         Long joinId = memberService.join(member);
 
-
         return "login";
     }
 
     @GetMapping("/login")
     public String loginPage(Model model) {
-        model.addAttribute("memberDto", new MemberDto());
+        model.addAttribute("memberDto", new LoginDto());
 
         return "login";
     }
@@ -63,7 +65,7 @@ public class MemberController {
 
 
     public Member createMemberFunction(MemberDto memberDto) {
-        return Member.createMember(memberDto.getEmail(), memberDto.getPw());
+        return Member.createMember(memberDto.getEmail(), memberDto.getPassword());
     }
 
 
