@@ -5,6 +5,7 @@ import com.example.jwt.domain.Member;
 import com.example.jwt.controller.dto.LoginDto;
 import com.example.jwt.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -51,9 +52,8 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String login(@Validated MemberDto memberDto, BindingResult bindingResult, Model model) {
+    public String login(@Valid MemberDto memberDto, BindingResult bindingResult, PasswordEncoder encoder, Model model) {
 
-        Member member = createMemberFunction(memberDto);
 
         if (bindingResult.hasErrors()) {
             return "login";

@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/mariadb/**", "/favicon.ico");
+                .antMatchers("/mariadb/**", "/favicon.ico", "/css/**", "/templates/**");
     }
 
     @Override
@@ -52,7 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 */
         http
                 .csrf().disable() // token 을 사용하기 때문에 csrf disable
+                .formLogin().loginPage("/login")
 
+                .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler) // Exception 추가
@@ -68,8 +70,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/member").permitAll()
+                .antMatchers("/member/**").permitAll()
                 .anyRequest().authenticated() //
+
 
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider)); // jwtFilter 를 JwtSecurityConfig 에도 적용

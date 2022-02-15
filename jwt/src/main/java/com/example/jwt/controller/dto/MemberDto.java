@@ -13,6 +13,8 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class MemberDto {
 
+    private Long id;
+
     @NotEmpty(message = "이메일을 입력해주세요")
     @Size(min = 5, max = 50)
     private String email;

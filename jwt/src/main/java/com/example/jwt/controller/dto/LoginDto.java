@@ -11,9 +11,9 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginDto {
-    private Long id;
+
     @NotBlank(message = "이메일을 입력해주세요")
     private String email;
     @NotBlank(message = "비밀번호를 입력해주세요")
-    private String pw;
+    private String password;
 }
