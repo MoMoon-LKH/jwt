@@ -28,13 +28,16 @@ public class Member {
     @Column(length = 100)
     private String pw;
 
-    private Member(String email, String pw) {
+    private String role;
+
+    private Member(String email, String pw, String role) {
         this.email = email;
         this.pw = pw;
+        this.role = role;
     }
 
-    public static Member createMember(String email, String pw) {
-        return new Member(email, pw);
+    public static Member createMember(String email, String pw, String role) {
+        return new Member(email, pw, role);
     }
 
 

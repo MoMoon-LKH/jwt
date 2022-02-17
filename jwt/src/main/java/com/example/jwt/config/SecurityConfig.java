@@ -6,6 +6,7 @@ import com.example.jwt.jwt.JwtSecurityConfig;
 import com.example.jwt.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
     @Override
     public void configure(WebSecurity web) throws Exception {

@@ -20,13 +20,12 @@ public class MemberRepository {
         em.persist(member);
     }
 
-
+    @EntityGraph(attributePaths = "authorities")
     public Optional<Member> findOneByEmail(String email) {
         return Optional.ofNullable(em.createQuery("select m from Member m where m.email = :email", Member.class)
         .setParameter("email",email)
         .getSingleResult());
     }
-
 
 
     public List<Member> findMembers(Member member) {

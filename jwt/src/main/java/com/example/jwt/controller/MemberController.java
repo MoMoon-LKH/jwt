@@ -65,7 +65,7 @@ public class MemberController {
 
 
     public Member createMemberFunction(MemberDto memberDto) {
-        return Member.createMember(memberDto.getEmail(), memberDto.getPassword());
+        return Member.createMember(memberDto.getEmail(), memberDto.getPassword(), "user");
     }
 
 

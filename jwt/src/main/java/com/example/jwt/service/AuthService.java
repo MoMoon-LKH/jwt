@@ -16,9 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class AuthService {
+public class AuthService{
 
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -29,9 +29,12 @@ public class AuthService {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(email, pw);
 
-        Authentication authentication = authenticationManagerBuilder.getObject()
-                .authenticate(authenticationToken);
+
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
 
         return tokenProvider.createToken(authentication.getName(), authentication);
     }

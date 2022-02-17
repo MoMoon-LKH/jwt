@@ -25,6 +25,7 @@ public class MemberService{
         return member.getId();
     }
 
+
     public Optional<Member> login(String email, String password) {
         Member member = memberRepository.findOneByEmail(email).get();
 

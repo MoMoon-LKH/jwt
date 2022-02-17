@@ -32,12 +32,15 @@ public class MemberApiController {
     public ResponseEntity<String> login(@RequestBody LoginDto loginDto) {
         Optional<Member> member = memberService.login(loginDto.getEmail(), loginDto.getPassword());
 
+
         if (!member.isPresent()) {
+
             return ResponseEntity.ok("null");
         }
 
         String token = authService.authorize(member.get().getEmail(), member.get().getPw());
         System.out.println("token = " + token);
+
 
         return ResponseEntity.ok(token);
     }
@@ -46,7 +49,7 @@ public class MemberApiController {
     public ResponseEntity<Long> join(@RequestBody MemberDto memberDto) {
         String encodedPw = passwordEncoder.encode(memberDto.getPassword());
 
-        Long joinMember = memberService.join(Member.createMember(memberDto.getEmail(), encodedPw));
+        Long joinMember = memberService.join(Member.createMember(memberDto.getEmail(), encodedPw, "user"));
         return ResponseEntity.ok(joinMember);
     }
 }

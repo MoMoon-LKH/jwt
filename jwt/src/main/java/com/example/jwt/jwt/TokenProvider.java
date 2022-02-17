@@ -52,6 +52,8 @@ public class TokenProvider implements InitializingBean {
     }
 
     public String createToken(String email, Authentication authentication) {
+        System.out.println("tokenProvider");
+
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(",")); // 권한들 확인
